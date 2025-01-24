@@ -76,7 +76,7 @@ The results of regression with ARIMA errors are displayed in the table below. `f
 
 As the dependent variable is the natural log of the price index, the coefficient can be interpreted as an approximate percentage change. Thus, the results suggest a roughly 4% decrease in price following the abolition of the tampon tax. To check whether the estimated model is a good fit, a plot of the residuals against the fitted values along with a plot of the ACF of the residuals are shown.
 
-```{r Tampon Resid Graphs, echo=FALSE}
+```{r Tampon Resid Graphs, echo=FALSE, warning=FALSE}
 ```
 
 For the most part, the ACF graph indicates that the model has accounted for most of the autocorrelation. The plot of residuals over time also suggests that the errors are likely homoskedastic -- aside from a few outliers, the residuals do not appear to have a changing variance. The standard errors can be trusted as a result.
