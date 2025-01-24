@@ -2,24 +2,34 @@
 title: "Did the 2021 UK Tampon Tax Abolition Reduce Prices?"
 author: "Stephen Min"
 date: "August 2024"
-output: pdf_document
-urlcolor: blue
-abstract: "This report analyzes the impact of the abolition of the 2021 UK tampon tax on prices. In particular, it is found that the elimination of the tax resulted in a roughly 4% decrease in the price of tampons, meaning that a majority of the savings was passed on to the consumers."
-header-includes:
-  \usepackage{abstract}
-  \renewcommand{\abstractname}{Summary}
-fontsize: 12pt
+format: 
+  pdf:
+    documentclass: article
+    include-in-header:
+      text: |
+        \renewcommand{\abstractname}{Executive Summary}
+        \usepackage{abstract}
+        \setlength{\abstitleskip}{-10pt}
+    urlcolor: blue
+    fontsize: 12pt
 bibliography: references.bib
+date-format: "MMMM YYYY"
+abstract: |
+  This report analyzes the impact of the abolition of the 2021 UK tampon tax on prices. In particular, it is found that the elimination of the tax resulted in a roughly 4% decrease in the price of tampons, meaning that a majority of the savings was passed on to the consumers.
 ---
 
 # Introduction
 
-```{r, include=FALSE}
+```{r}
+#| include: false
+
 library(here)
 knitr::read_chunk(here('code', 'main.R'))
 ```
 
-```{r Setup, include=FALSE}
+```{r}
+#| label: Setup
+#| include: false
 ```
 
 On January 1, 2021, the United Kingdom abolished the 5% VAT on women's sanitary products, commonly known as the "tampon tax." Economic theory generally predicts that tax cuts lead to price decreases, but the extent of this effect depends on various factors such as demand elasticity. In the case of the UK tampon tax abolition, there has been considerable debate regarding its actual impact on consumer prices.
@@ -46,13 +56,15 @@ The identifying assumption of this approach is that, after accounting for the ta
 
 To choose what parameters to use for the ARIMA errors, the `fable` package in R provides an automated process. The specific ARIMA model will be reported in the results.
 
-# Data 
+# Data
 
-Data for this analysis comes from the ONS website https://www.ons.gov.uk/economy. 
+Data for this analysis comes from the ONS website https://www.ons.gov.uk/economy.
 
 A crucial aspect of the ONS data that needs to be dealt with is the way the ONS calculates individual price indices. Effectively, individual price indices are rebased using last January's price index every year. The effect of this procedure can be seen in the section of the data below.
 
-```{r Table for Rebase Example, echo=FALSE}
+```{r}
+#| label: Table for Rebase Example
+#| echo: false
 ```
 
 Notice that the price index has significant jumps when transitioning from January to February. To account for this, the price indices for tampons will be rebased to 2005 for this analysis. The other products to be analyzed will be rebased to the earliest year available in their respective datasets.
@@ -61,7 +73,9 @@ Notice that the price index has significant jumps when transitioning from Januar
 
 First, a plot of the autocorrelation function (ACF) up to 48 months for the tampon data is shown below.
 
-```{r Analysis, include=FALSE}
+```{r}
+#| label: Analysis
+#| include: false
 ```
 
 ```{r ACF Plot, echo=FALSE}
@@ -88,7 +102,9 @@ A plot of the price index over time is also displayed below. A noticeable jump c
 
 # Robustness Check
 
-Recall that the key assumption underlying the methodology of this analysis is that the observed price drop is attributable solely to the tax change after accounting for the impact of time. To test whether another event that suddenly dropped prices may have occurred at the same time as the abolition of the tampon tax, the same methodology used for tampons is applied to several related goods — tissues, toilet rolls, baby wipes, and razor cartridges^[@neidle2022 looked at a total of 13 other goods. For brevity, only four are analyzed in this report.]. 
+Recall that the key assumption underlying the methodology of this analysis is that the observed price drop is attributable solely to the tax change after accounting for the impact of time. To test whether another event that suddenly dropped prices may have occurred at the same time as the abolition of the tampon tax, the same methodology used for tampons is applied to several related goods — tissues, toilet rolls, baby wipes, and razor cartridges[^1].
+
+[^1]: @neidle2022 looked at a total of 13 other goods. For brevity, only four are analyzed in this report.
 
 The results are reported in the table below.
 
@@ -109,4 +125,4 @@ The residual plots reveal a few outliers and indicate heteroskedasticity in the 
 
 \newpage
 
-# References
+## References
